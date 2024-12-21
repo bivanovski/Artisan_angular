@@ -21,7 +21,7 @@ jobs:
         working-directory: artisan
         run: |
           npm install
-          npm run build --configuration production
+          npm run build --configuration production --project artisan
           cp web.config dist/artisan/browser/
 
       - name: Zip artifact for deployment
