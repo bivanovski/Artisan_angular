@@ -64,4 +64,4 @@ jobs:
         with:
           app-name: 'artisan-market'
           slot-name: 'Production'
-          package: artisan/dist # Adjusted to deploy the build output
+          package: artisan/dist/artisan
