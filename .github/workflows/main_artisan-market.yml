@@ -25,7 +25,13 @@ jobs:
 
       - name: Copy web.config
         run: |
+          cp artisan/ecosystem.config.js artisan/dist/artisan/browser/
           cp artisan/web.config artisan/dist/artisan/browser/
+
+      - name: Zip artifact for deployment
+        run: |
+          cd artisan/dist/artisan/browser
+          zip -r ../../../../release.zip ./*
 
       - name: Zip artifact for deployment
         run: |
