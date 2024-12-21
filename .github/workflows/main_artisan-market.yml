@@ -21,16 +21,16 @@ jobs:
         working-directory: artisan
         run: |
           npm install
-          npm run build -- --configuration=production --base-href /
+          npm run build -- --configuration=production --base-href=/
 
       - name: Copy web.config
         run: |
-          cp artisan/dist/artisan/web.config artisan/dist/artisan/browser/
+          cp artisan/dist/app/web.config artisan/dist/app/browser
 
       - name: Zip artifact for deployment
         run: |
-          cd artisan/dist/artisan/browser
-          zip -r ../../../../release.zip ./*
+          cd artisan/dist/app
+          zip -r ../../../release.zip ./*
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
