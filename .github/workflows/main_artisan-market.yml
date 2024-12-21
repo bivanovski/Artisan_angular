@@ -19,13 +19,13 @@ jobs:
           node-version: '18.x'
 
       - name: Install dependencies and build Angular app
-        working-directory: artisan
+        working-directory: artisan # Specify the folder where package.json is located
         run: |
           npm install
           npm run build --prod
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip artisan/dist/artisan/browser/*
+        run: zip -r release.zip artisan/dist/artisan/* # Use the correct output path from angular.json
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -40,13 +40,16 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write
+      id-token: write # This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: angular-app
+
+      - name: Unzip artifact for deployment
+        run: unzip release.zip -d $HOME/site/wwwroot # Ensure it's unzipped into the correct directory
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -61,4 +64,4 @@ jobs:
         with:
           app-name: 'artisan-market'
           slot-name: 'Production'
-          package: release.zip
+          package: artisan/dist/artisan # Correct path to the built Angular app
