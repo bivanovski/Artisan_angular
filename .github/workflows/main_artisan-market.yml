@@ -20,9 +20,9 @@ jobs:
       - name: Install dependencies and build Angular app
         working-directory: artisan
         run: |
-          npm install
-          npm run build --configuration production --project artisan
-          cp web.config dist/artisan/browser/
+           npm install
+           npm run build --prod
+           cp web.config dist/artisan/browser/
 
       - name: Zip artifact for deployment
         run: |
