@@ -3,89 +3,77 @@ name: Build and deploy Angular app to Azure Web App
 on:
   push:
     branches:
-      - main  # Trigger on push to 'main' branch
-  workflow_dispatch:  # Allows manual triggering
+      - main
+  workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-    # 1. Checkout the code
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    # 2. Set up Node.js environment
-    - name: Set up Node.js version
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20.16.0'  # Make sure you're using the version compatible with your app
+      - name: Set up Node.js version
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.16.0'
 
-    # 3. Install dependencies and build Angular app
-    - name: Install dependencies and build Angular app
-      working-directory: artisan  # Ensure this is the correct path
-      run: |
-        npm install
-        npm run build -- --configuration=production --base-href /
-
-    # 4. Copy web.config to the build output directory
-    - name: Copy web.config to build directory
-      run: |
-        cp artisan/web.config artisan/dist/app/browser/
-
-    # 5. Zip the build artifacts
-    - name: Zip artifact for deployment
-      run: |
-        cd artisan/dist/app/browser
-        zip -r ../../../../release.zip ./*
-
-    # 6. Upload the build artifact for the deployment job
-    - name: Upload artifact for deployment job
-      uses: actions/upload-artifact@v4
-      with:
-        name: angular-app
-        path: release.zip
+      - name: Install dependencies and build Angular app
+        working-directory: artisan
+        run: |
+          npm install
+          npm run build -- --configuration=production --base-href /
+      - name: Copy web.config
+        run: |
+          cp artisan/web.config artisan/dist/app/browser/
+      - name: Zip artifact for deployment
+        run: |
+          cd artisan/dist/app/browser
+          zip -r ../../../../release.zip ./*
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: angular-app
+          path: release.zip
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build-and-deploy
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write
 
     steps:
-    # 1. Download the artifact from the build job
     - name: Download artifact from build job
       uses: actions/download-artifact@v4
       with:
         name: angular-app
 
-    # 2. Unzip the artifact
     - name: Unzip artifact for deployment
       run: |
         mkdir myapp
         unzip release.zip -d myapp
 
-    # 3. Login to Azure
+    - name: Create wwwroot directory
+      run: |
+        mkdir -p /home/site/wwwroot/
+
+    - name: Move files to wwwroot
+      run: |
+        mv myapp/* /home/site/wwwroot/
+
     - name: Login to Azure
       uses: azure/login@v2
       with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4190740B6AF5451A92624C576DC58150 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5323485CE2724E43B2CF7BF9866CE852 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C6E4B2A9F988455FAC5404FD8B54D3E0 }}
+        client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4190740B6AF5451A92624C576DC58150 }}
+        tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5323485CE2724E43B2CF7BF9866CE852 }}
+        subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C6E4B2A9F988455FAC5404FD8B54D3E0 }}
 
-    # 4. Move files to the correct directory for Azure Web App deployment
-    - name: Move files to wwwroot directory
-      run: |
-        mkdir -p /home/site/wwwroot
-        mv myapp/* /home/site/wwwroot/
-
-    # 5. Set up static file serving with PM2 in Azure App Service
-    - name: Set up PM2 to serve static files
-      run: |
-        echo 'pm2 serve /home/site/wwwroot --no-daemon --spa' > /home/site/wwwroot/startup.sh
-        chmod +x /home/site/wwwroot/startup.sh
-
-    # 6. Deploy to Azure Web App
     - name: Deploy to Azure Web App
+      id: deploy-to-webapp
       uses: azure/webapps-deploy@v3
       with:
-        app-name: 'your-app-name'
-        publish-profile: ${{ secrets.AZURE_APP_PUBLISH_PROFILE }}
+        app-name: 'artisan-market'
+        slot-name: 'Production'
         package: /home/site/wwwroot/
