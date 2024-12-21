@@ -22,7 +22,7 @@ jobs:
         run: |
            npm install
            npm run build --prod
-           cp web.config dist/artisan/browser/
+           cp dist/artisan/browser/web.config dist/artisan/browser/
 
       - name: Zip artifact for deployment
         run: |
