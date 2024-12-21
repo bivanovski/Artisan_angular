@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-             "outputPath": "dist/artisan/browser",
+            "outputPath": "artisan/dist/app",
             "baseHref": "/",
             "deployUrl": "/",
             "index": "src/index.html",
@@ -42,8 +42,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1.2mb", 
-                  "maximumError": "1.2mb" 
+                  "maximumWarning": "1.2mb",
+                  "maximumError": "1.2mb"
                 },
                 {
                   "type": "anyComponentStyle",
