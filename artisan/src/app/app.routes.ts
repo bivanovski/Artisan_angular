@@ -8,12 +8,13 @@ import { OrderListComponent } from './artisans/order-list/order-list.component';
 import { CustomerReviewComponent } from './artisans/customer-review/customer-review.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'artisan', pathMatch: 'full' },
+    { path: '', component: ArtisansListComponent },            // Default route
     { path: 'edit-artisan/:id', component: EditArtisanComponent },  // Redirect to artisan list on default
     { path: 'delete-artisan/:id', component: DeleteArtisanComponent }, // Route for deleting artisan
     { path: 'add-artisan', component: AddArtisanComponent },    // Route for adding artisan
     { path: 'artisan', component: ArtisansListComponent },      // Route for artisan list
     { path: 'add-product/:id', component: AddProductComponent }, // Route for adding product with artisan ID
     { path: 'order', component: OrderListComponent },
-    { path: 'customer-review', component: CustomerReviewComponent }
+    { path: 'customer-review', component: CustomerReviewComponent },
+    { path: '**', redirectTo: '' }
 ];
