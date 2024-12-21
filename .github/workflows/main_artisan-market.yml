@@ -25,7 +25,7 @@ jobs:
           npm run build --prod
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip artisan/dist/artisan/* # Use the correct output path from angular.json
+        run: zip release.zip -r artisan/dist/* # Adjusted to zip the build output
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -48,6 +48,9 @@ jobs:
         with:
           name: angular-app
 
+      - name: Unzip artifact for deployment
+        run: unzip release.zip
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -61,4 +64,4 @@ jobs:
         with:
           app-name: 'artisan-market'
           slot-name: 'Production'
-          package: release.zip # Point directly to the zip file
+          package: artisan/dist # Adjusted to deploy the build output
