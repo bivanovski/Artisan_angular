@@ -49,12 +49,7 @@ jobs:
           name: angular-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip
-
-      - name: Move files to the correct directory
-        run: |
-          mkdir -p $HOME/site/wwwroot
-          mv artisan/dist/artisan/browser/* $HOME/site/wwwroot
+        run: unzip release.zip -d $HOME/site/wwwroot
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -70,4 +65,3 @@ jobs:
           app-name: 'artisan-market'
           slot-name: 'Production'
           package: $HOME/site/wwwroot
-
