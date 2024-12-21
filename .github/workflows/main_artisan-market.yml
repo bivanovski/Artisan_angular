@@ -17,21 +17,21 @@ jobs:
         with:
           node-version: '20.16.0'
 
-      - name: Clean npm cache and install dependencies
+      - name: Install and build
         working-directory: artisan
         run: |
           npm cache clean --force
           npm install --no-optional
-          npm run build -- --configuration=production --output-path=dist/app
+          npm run build --configuration production
 
       - name: Copy web.config
         run: |
-          cp artisan/web.config artisan/dist/app/
+          cp artisan/web.config artisan/dist/app/browser/
 
       - name: Zip artifact for deployment
         run: |
-          cd artisan/dist/app
-          zip -r ../../../release.zip ./*
+          cd artisan/dist/app/browser
+          zip -r ../../../../release.zip ./*
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -55,9 +55,7 @@ jobs:
           name: angular-app
 
       - name: Unzip artifact for deployment
-        run: |
-          mkdir -p artisan/dist/app/browser
-          unzip release.zip -d artisan/dist/app/browser/
+        run: unzip release.zip -d ./app
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -72,4 +70,4 @@ jobs:
         with:
           app-name: 'artisan-market'
           slot-name: 'Production'
-          package: artisan/dist/app
+          package: ./app
