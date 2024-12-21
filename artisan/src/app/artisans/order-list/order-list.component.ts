@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import {MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 enum SearchField {
   All = 'all',
@@ -44,7 +45,8 @@ enum SearchField {
     MatInputModule,
     MatOptionModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    MatPaginatorModule
   ],
   templateUrl: './order-list.component.html',
   styleUrl: './order-list.component.css',
@@ -52,6 +54,7 @@ enum SearchField {
 
 export class OrderListComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   orders: Order[] = [];
   dataSource = new MatTableDataSource<Order>([]);
   displayedColumns: string[] = [
@@ -122,6 +125,7 @@ export class OrderListComponent implements OnInit {
              data.customer.address.toLowerCase().includes(filter) ||
              data.id.toString().includes(filter);
     };
+    this.dataSource.paginator = this.paginator;
   }
   ngOnInit(): void {
     this.loadOrders();
