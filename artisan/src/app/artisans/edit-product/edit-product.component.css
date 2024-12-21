@@ -1,0 +1,18 @@
+.full-width {
+    width: 100%;
+  }
+  
+.container {
+    margin-top: 20px; /* Adjust the value as needed */
+    padding-top: 20px; /* Alternatively, you can use padding */
+}
+
+.snackbar-success {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .snackbar-error {
+    background-color: #f44336;
+    color: white;
+  }

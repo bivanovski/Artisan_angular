@@ -1,0 +1,77 @@
+<div class="page-header">
+  <h1>Order Management</h1>
+  <p class="order-count" *ngIf="!isLoading">Total Orders: {{orders.length}}</p>
+</div>
+
+<div class="search-container">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search by</mat-label>
+    <mat-select [(ngModel)]="selectedSearchField">
+      <mat-option [value]="searchFields.All">All Fields</mat-option>
+      <mat-option [value]="searchFields.CustomerName">Customer Name</mat-option>
+      <mat-option [value]="searchFields.Email">Email</mat-option>
+      <mat-option [value]="searchFields.Address">Address</mat-option>
+      <mat-option [value]="searchFields.OrderId">Order ID</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="filter-field">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search orders...">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+</div>
+
+<div *ngIf="isLoading" class="loader-container">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <div class="orders-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Order ID </th>
+        <td mat-cell *matCellDef="let order"> {{order.id}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="customerName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name </th>
+        <td mat-cell *matCellDef="let order"> {{order.customer.fullName}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="customerEmail">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+        <td mat-cell *matCellDef="let order"> {{order.customer.email}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="customerAddress">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
+        <td mat-cell *matCellDef="let order"> {{order.customer.address}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="products">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Products </th>
+        <td mat-cell *matCellDef="let order"> {{order.products.length}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </th>
+        <td mat-cell *matCellDef="let order"> {{order.quantity}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="orderDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Date </th>
+        <td mat-cell *matCellDef="let order"> {{order.orderDate | date:'mediumDate'}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let order">
+          <button mat-icon-button color="warn" (click)="deleteOrder(order)" matTooltip="Delete Order">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>

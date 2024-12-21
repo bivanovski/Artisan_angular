@@ -1,0 +1,39 @@
+<div class="dialog-container mat-elevation-z4">
+  <h2 mat-dialog-title class="dialog-title">
+    <mat-icon class="title-icon">shopping_bag</mat-icon>
+    Available Products
+  </h2>
+  
+  <mat-divider></mat-divider>
+  
+  <div mat-dialog-content class="dialog-content">
+    <div class="products-grid">
+      <mat-card class="product-card" *ngFor="let product of data.products">
+        <mat-card-content>
+          <div class="product-header">
+            <h3 class="product-name">{{ product.name }}</h3>
+            <span class="product-price">{{ product.price }} DEN</span>
+          </div>
+          <div class="product-details">
+            <span class="category">
+              <mat-icon>category</mat-icon>
+              {{ product.category }}
+            </span>
+            <span class="weight">
+              <mat-icon>scale</mat-icon>
+              {{ product.weight }}g
+            </span>
+          </div>
+          <div class="product-actions">
+            <button mat-icon-button color="primary" (click)="openEditProductDialog(product)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="openDeleteProductDialog(product)">
+              <mat-icon>delete</mat-icon >
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+<div class="container mat-elevation-z8">
+  <mat-card>
+    <mat-card-header class="mb-3">
+      <mat-card-title class="text-light">
+        <mat-icon>add_shopping_cart</mat-icon>
+        Add New Product
+      </mat-card-title>
+      <mat-card-subtitle>Fill in the product details below</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
+        <!-- Artisan Selection -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Select Artisan</mat-label>
+          <mat-select formControlName="artisanId" (selectionChange)="onArtisanSelect($event)">
+            <mat-option *ngFor="let artisan of artisans" [value]="artisan.id">
+              {{artisan.artisanStoreName}}
+            </mat-option>
+          </mat-select>
+          <mat-icon matPrefix>person</mat-icon>
+          <mat-error *ngIf="productForm.get('artisanId')?.hasError('required')">
+            Please select an artisan
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Product Form Fields -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Product Name</mat-label>
+          <input matInput formControlName="name" placeholder="Enter product name">
+          <mat-icon matPrefix>inventory_2</mat-icon>
+          <mat-error *ngIf="productForm.get('name')?.hasError('required')">
+            Product name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Category</mat-label>
+          <input matInput formControlName="category" placeholder="Enter product category">
+          <mat-icon matPrefix>category</mat-icon>
+          <mat-error *ngIf="productForm.get('category')?.hasError('required')">
+            Category is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Price</mat-label>
+          <input matInput type="number" formControlName="price" placeholder="Enter product price">
+          <mat-icon matPrefix>attach_money</mat-icon>
+          <mat-error *ngIf="productForm.get('price')?.hasError('required')">
+            Price is required
+          </mat-error>
+          <mat-error *ngIf="productForm.get('price')?.hasError('min')">
+            Price must be greater than 0
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Weight</mat-label>
+          <input matInput type="number" formControlName="weight" placeholder="Enter product weight">
+          <mat-icon matPrefix>scale</mat-icon>
+          <mat-error *ngIf="productForm.get('weight')?.hasError('required')">
+            Weight is required
+          </mat-error>
+          <mat-error *ngIf="productForm.get('weight')?.hasError('min')">
+            Weight must be greater than 0
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Submit Buttons -->
+        <div class="button-container">
+          <button mat-stroked-button type="button" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+            Cancel
+          </button>
+          <button mat-raised-button color="primary" type="submit" 
+                  [disabled]="!productForm.valid || isSubmitting">
+            <mat-icon>save</mat-icon>
+            {{ isSubmitting ? 'Saving...' : 'Save Product' }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

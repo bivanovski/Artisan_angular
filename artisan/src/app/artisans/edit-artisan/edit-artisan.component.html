@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Edit Artisan</h1>
+<div mat-dialog-content>
+  <form [formGroup]="artisanForm">
+    <mat-form-field class="full-width">
+      <mat-label>Store Name</mat-label>
+      <input matInput formControlName="artisanStoreName" />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Craft</mat-label>
+      <input matInput formControlName="craft" />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Address</mat-label>
+      <input matInput formControlName="address" />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Social Media Link</mat-label>
+      <input matInput formControlName="socialMediaLink" />
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSaveClick()">Save</button>
+</div>

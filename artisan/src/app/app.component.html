@@ -1,0 +1,46 @@
+<mat-toolbar class="navbar mat-elevation-z8">
+  <mat-toolbar-row>
+    <a mat-button routerLink="/" class="brand">
+      <img src="../assets/images/artisan-logo.png" alt="Artisan Market Logo" class="logo">
+    </a>
+    <span class="spacer"></span>
+    <div class="nav-links">
+      <a mat-button routerLink="/add-artisan" routerLinkActive="active" class="nav-link">
+        <mat-icon class="nav-icon">store</mat-icon>
+        <span class="nav-text">Add Artisan</span>
+      </a>
+      <a mat-button routerLink="/add-product/:id" routerLinkActive="active" class="nav-link">
+        <mat-icon class="nav-icon">add_shopping_cart</mat-icon>
+        <span class="nav-text">Add Product</span>
+      </a>
+      <a mat-button routerLink="/order" routerLinkActive="active" class="nav-link">
+        <mat-icon class="nav-icon">receipt_long</mat-icon>
+        <span class="nav-text">View Orders</span>
+      </a>
+      <a mat-button routerLink="/customer-review" routerLinkActive="active" class="nav-link">
+        <mat-icon class="nav-icon">star_rate</mat-icon>
+        <span class="nav-text">Reviews</span>
+      </a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<!-- Router outlet for displaying components -->
+<div class="content bg-dark">
+  <router-outlet></router-outlet>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <p>© 2024 Artisan Market</p>
+    </div>
+    <div class="social-icons">
+      <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+      <a href="#" class="social-icon"><i class="bi bi-twitter"></i></a>
+    </div>
+  </div>
+</footer>

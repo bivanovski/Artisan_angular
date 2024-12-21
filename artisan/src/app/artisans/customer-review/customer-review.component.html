@@ -1,0 +1,21 @@
+<div class="reviews-container">
+    
+    <div *ngIf="isLoading" class="loading-spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  
+    <div class="reviews-grid" *ngIf="!isLoading">
+      <div *ngFor="let artisan of reviewsByArtisan | keyvalue" class="artisan-column">
+        <h2 class="artisan-title">{{artisan.key}} ({{artisan.value.length}} reviews)</h2>
+        <mat-card *ngFor="let review of artisan.value" class="review-card" [@fadeIn]>
+          <mat-card-content>
+            <div class="rating">
+              <mat-icon *ngFor="let star of [].constructor(review.rating)" class="star-filled">star</mat-icon>
+              <mat-icon *ngFor="let star of [].constructor(5 - review.rating)" class="star-empty">star_border</mat-icon>
+            </div>
+            <p class="review-text">{{review.description}}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,75 @@
+<div class="container mat-elevation-z8">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="text-light">
+        <mat-icon>store</mat-icon>
+        Add New Artisan
+      </mat-card-title>
+      <mat-card-subtitle>Enter artisan details below</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="artisanForm" (ngSubmit)="onSubmit()" class="form-container">
+        
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Store Name</mat-label>
+          <input matInput id="artisanStoreName" formControlName="artisanStoreName" placeholder="Enter store name">
+          <mat-icon matPrefix>store</mat-icon>
+          <mat-error *ngIf="artisanForm.get('artisanStoreName')?.hasError('required')">
+            Store name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Craft</mat-label>
+          <input matInput id="craft" formControlName="craft" placeholder="Enter craft type">
+          <mat-icon matPrefix>handyman</mat-icon>
+          <mat-error *ngIf="artisanForm.get('craft')?.hasError('required')">
+            Craft is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Address</mat-label>
+          <textarea matInput id="address" formControlName="address" placeholder="Enter full address" rows="3"></textarea>
+          <mat-icon matPrefix>location_on</mat-icon>
+          <mat-error *ngIf="artisanForm.get('address')?.hasError('required')">
+            Address is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput id="email" formControlName="email" placeholder="Enter email address">
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-error *ngIf="artisanForm.get('email')?.hasError('required')">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="artisanForm.get('email')?.hasError('email')">
+            Please enter a valid email address
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Social Media Link</mat-label>
+          <input matInput id="socialMediaLink" formControlName="socialMediaLink" placeholder="Enter social media link">
+          <mat-icon matPrefix>link</mat-icon>
+          <mat-error *ngIf="artisanForm.get('socialMediaLink')?.hasError('required')">
+            Social media link is required
+          </mat-error>
+        </mat-form-field>
+
+        <div class="button-container">
+          <button mat-stroked-button type="button" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+            Cancel
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!artisanForm.valid || isSubmitting">
+            <mat-icon>save</mat-icon>
+            {{ isSubmitting ? 'Saving...' : 'Save Artisan' }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

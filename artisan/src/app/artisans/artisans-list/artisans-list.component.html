@@ -1,0 +1,176 @@
+<div class="carousel-container">
+  <div
+    id="carouselExampleIndicators"
+    class="carousel slide"
+    data-bs-ride="carousel"
+  >
+    <div class="carousel-indicators">
+      <button
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide-to="0"
+        class="active"
+        aria-current="true"
+        aria-label="Slide 1"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide-to="1"
+        aria-label="Slide 2"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide-to="2"
+        aria-label="Slide 3"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide-to="3"
+        aria-label="Slide 4"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide-to="4"
+        aria-label="Slide 5"
+      ></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img
+          src="assets/images/pic1.jpg"
+          class="d-block w-100"
+          alt="Artisan Market Image 1"
+        />
+        <div class="carousel-caption d-none d-md-block">
+          <h1 class="display-4">Welcome to the Artisan Market</h1>
+          <p class="lead">Discover unique handcrafted products from local artisans</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img
+          src="assets/images/pic2.webp"
+          class="d-block w-100"
+          alt="Artisan Market Image 2"
+        />
+        <div class="carousel-caption d-none d-md-block">
+          <h1 class="display-4">Handcrafted Excellence</h1>
+          <p class="lead">Each piece tells a unique story of craftsmanship</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img
+          src="assets/images/pic3.jpg"
+          class="d-block w-100"
+          alt="Artisan Market Image 3"
+        />
+        <div class="carousel-caption d-none d-md-block">
+          <h1 class="display-4">Support Local Artisans</h1>
+          <p class="lead">Empowering creativity in your community</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img
+          src="assets/images/pic4.jpg"
+          class="d-block w-100"
+          alt="Artisan Market Image 4"
+        />
+        <div class="carousel-caption d-none d-md-block">
+          <h1 class="display-4">Quality Craftsmanship</h1>
+          <p class="lead">Where tradition meets modern design</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img
+          src="assets/images/pic5.webp"
+          class="d-block w-100"
+          alt="Artisan Market Image 5"
+        />
+        <div class="carousel-caption d-none d-md-block">
+          <h1 class="display-4">Artisanal Culture & Heritage</h1>
+          <p class="lead">Preserving skills passed down through generations</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Artisan List Section -->
+<div class="container my-5" id="artisan-list">
+  <h2 class="text-center my-4">Our Artisans</h2>
+  <div class="container mb-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 text-center">
+        <p class="lead text-white">
+          Discover unique handcrafted treasures from our talented local
+          artisans. Each piece tells a story of creativity, passion, and
+          dedication to traditional craftsmanship. Support small businesses and
+          bring authentic artistry into your life.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center d-flex">
+    <div class="d-flex justify-content-center">
+      <mat-spinner *ngIf="loading" mode="indeterminate"></mat-spinner>
+    </div>
+    <div class="col-md-4 mb-4" *ngFor="let artisan of artisans">
+      <mat-card>
+        <mat-card-content>
+          <img
+            [src]="getArtisanImage()"
+            [alt]="artisan.artisanStoreName"
+            class="artisan-image"
+          />
+          <h3 class="card-title">{{ artisan.artisanStoreName }}</h3>
+          <p class="card-text">
+            <mat-icon class="info-icon">handyman</mat-icon>
+            {{ artisan.craft }}
+          </p>
+          <p class="card-text">
+            <mat-icon class="info-icon">location_on</mat-icon>
+            {{ artisan.address }}
+          </p>
+          <div class="contact-container">
+            <span class="social-icons">
+              <a
+                [href]="artisan.socialMediaLink"
+                target="_blank"
+                class="social-link"
+              >
+                <i class="bi bi-facebook"></i>
+              </a>
+            </span>
+            <a [href]="'mailto:' + artisan.email" class="mail-link">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="editArtisan(artisan)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="deleteArtisan(artisan)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <div class="d-flex justify-content">
+            <button mat-flat-button (click)="openDialog(artisan)">
+              View Products
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
