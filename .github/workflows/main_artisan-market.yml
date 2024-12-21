@@ -21,16 +21,16 @@ jobs:
         working-directory: artisan
         run: |
           npm install
-          npm run build -- --configuration=production --base-href=/
+          npm run build -- --configuration=production --base-href /
 
       - name: Copy web.config
         run: |
-          cp artisan/web.config artisan/dist/app/browser
+          cp artisan/web.config artisan/dist/app/browser/
 
       - name: Zip artifact for deployment
         run: |
-          cd artisan/dist/app
-          zip -r ../../../release.zip ./*
+          cd artisan/dist/app/browser
+          zip -r ../../../../release.zip ./*
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -57,7 +57,6 @@ jobs:
         run: |
           mkdir myapp
           unzip release.zip -d myapp
-          mv myapp/* /home/site/wwwroot/
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -72,4 +71,4 @@ jobs:
         with:
           app-name: 'artisan-market'
           slot-name: 'Production'
-          package: /home/site/wwwroot/
+          package: myapp
