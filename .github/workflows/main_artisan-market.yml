@@ -21,8 +21,9 @@ jobs:
         working-directory: artisan
         run: |
           npm cache clean --force
+          npm install -g @angular/cli
           npm install --no-optional
-          ng build --configuration=production
+          npm run build -- --configuration production
 
       - name: Copy web.config
         run: |
