@@ -21,17 +21,11 @@ jobs:
         working-directory: artisan
         run: |
           npm install
-          npm run build -- --configuration=production --base-href=/
+          npm run build -- --configuration=production --base-href /
 
       - name: Copy web.config
         run: |
-          cp artisan/ecosystem.config.js artisan/dist/artisan/browser/
-          cp dist/artisan/web.config artisan/dist/artisan/browser/
-
-      - name: Zip artifact for deployment
-        run: |
-          cd artisan/dist/artisan/browser
-          zip -r ../../../../release.zip ./*
+          cp artisan/dist/artisan/web.config artisan/dist/artisan/browser/
 
       - name: Zip artifact for deployment
         run: |
@@ -63,7 +57,7 @@ jobs:
         run: |
           mkdir myapp
           unzip release.zip -d myapp
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
