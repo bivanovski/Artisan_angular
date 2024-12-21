@@ -66,9 +66,9 @@ jobs:
     - name: Login to Azure
       uses: azure/login@v2
       with:
-        client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
-        tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
-        subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4190740B6AF5451A92624C576DC58150 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5323485CE2724E43B2CF7BF9866CE852 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C6E4B2A9F988455FAC5404FD8B54D3E0 }}
 
     # 4. Move files to the correct directory for Azure Web App deployment
     - name: Move files to wwwroot directory
