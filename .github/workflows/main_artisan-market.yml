@@ -25,7 +25,7 @@ jobs:
 
       - name: Copy web.config
         run: |
-          cp artisan/dist/app/web.config artisan/dist/app/browser
+          cp artisan/web.config artisan/dist/app/
 
       - name: Zip artifact for deployment
         run: |
