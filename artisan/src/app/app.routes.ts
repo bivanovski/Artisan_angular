@@ -15,5 +15,4 @@ export const routes: Routes = [
     { path: 'add-product/:id', component: AddProductComponent }, // Route for adding product with artisan ID
     { path: 'order', component: OrderListComponent },
     { path: 'customer-review', component: CustomerReviewComponent },
-    { path: '**', redirectTo: '' }
 ];
