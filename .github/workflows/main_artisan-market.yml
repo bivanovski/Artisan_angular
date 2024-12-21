@@ -23,7 +23,7 @@ jobs:
           npm install
           npm run build -- --configuration=production
 
-      - name: Create web.config
+      - name: Copy web.config
         run: |
           cp artisan/web.config artisan/dist/artisan/browser/
 
