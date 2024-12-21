@@ -15,6 +15,7 @@
           "options": {
              "outputPath": "dist/artisan/browser",
             "baseHref": "/",
+            "deployUrl": "/",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
