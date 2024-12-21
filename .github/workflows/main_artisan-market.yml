@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js version
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20.16.0'
@@ -22,18 +22,18 @@ jobs:
         run: |
           npm cache clean --force
           npm install --no-optional
-          npm run build --configuration production
+          ng build --configuration=production
 
       - name: Copy web.config
         run: |
           cp artisan/web.config artisan/dist/app/browser/
 
-      - name: Zip artifact for deployment
+      - name: Create deployment package
         run: |
           cd artisan/dist/app/browser
           zip -r ../../../../release.zip ./*
 
-      - name: Upload artifact for deployment job
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: angular-app
@@ -49,12 +49,12 @@ jobs:
       id-token: write
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: angular-app
 
-      - name: Unzip artifact for deployment
+      - name: Prepare for deployment
         run: unzip release.zip -d ./app
 
       - name: Login to Azure
