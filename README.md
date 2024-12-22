@@ -2,7 +2,7 @@
 
 An Angular-based web application for managing artisan products, orders, and customer reviews. The platform connects local artisans with customers, showcasing handcrafted products and managing orders efficiently.
 
-Link to the website: artisan-market-agbha5b6dgawfxgt.eastus-01.azurewebsites.net
+Link to the website: [Artisan Market](https://artisan-market-agbha5b6dgawfxgt.eastus-01.azurewebsites.net)
 
 ## Features
 
